@@ -4,12 +4,6 @@ A Python project exploring orbital dynamics through numerical simulation and vis
 
 The project uses REBOUND and Matplotlib to investigate gravitational systems and render particle trajectories. It is intended as a computational physics project, with an emphasis on making the simulated behaviour observable and the implementation easier to explore.
 
-"Python" (https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-"REBOUND" (https://img.shields.io/badge/Simulation-REBOUND-blue?style=flat)
-"Matplotlib" (https://img.shields.io/badge/Visualisation-Matplotlib-11557C?style=flat&logo=plotly&logoColor=white)
-
-«Project status: See the current source code and repository history for the implemented simulation options. This README describes the project at a high level; the exact integration method and supported configuration options should be confirmed against the current implementation.»
-
 ---
 
 # Contents
