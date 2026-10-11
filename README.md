@@ -1,226 +1,158 @@
-# Orbital Simulation with REBOUND
+## N-Body Orbital Dynamics
 
-This project simulates the orbital dynamics of particles (e.g., asteroids or small bodies) around a central star using the REBOUND N-body simulation package. It employs a custom velocity Verlet integrator, combined with REBOUND's WHFast integrator, to compute gravitational interactions. This generates a 2D (or optionally 3D) animation of particle orbits with trails, which is saved as an MP4 video using FFmpeg. The simulation includes stability checks for escapes or near-collisions and calculates particle densities. Units are astronomical: AU (astronomical units) for distance, years for time, and solar masses (Msun) for mass.
+A Python project exploring orbital dynamics through numerical simulation and visualisation.
 
+The project uses REBOUND and Matplotlib to investigate gravitational systems and render particle trajectories. It is intended as a computational physics project, with an emphasis on making the simulated behaviour observable and the implementation easier to explore.
+
+"Python" (https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+"REBOUND" (https://img.shields.io/badge/Simulation-REBOUND-blue?style=flat)
+"Matplotlib" (https://img.shields.io/badge/Visualisation-Matplotlib-11557C?style=flat&logo=plotly&logoColor=white)
+
+«Project status: See the current source code and repository history for the implemented simulation options. This README describes the project at a high level; the exact integration method and supported configuration options should be confirmed against the current implementation.»
+
+---
+
+# Contents
+
+- "Overview" (#overview)
+- "Features" (#features)
+- "Preview" (#preview)
+- "Technology Stack" (#technology-stack)
+- "Installation" (#installation)
+- "Running the Project" (#running-the-project)
+- "Configuration" (#configuration)
+- "Scientific Considerations" (#scientific-considerations)
+- "Limitations" (#limitations)
+- "Roadmap" (#roadmap)
+- "Contributing" (#contributing)
+- "Licence" (#licence)
+
+---
+
+# Overview
+
+Gravitational systems provide a practical way to explore numerical integration, initial conditions, orbital motion, and the challenges of simulating interacting bodies.
+
+This project uses computational methods to evolve a system and visualise the resulting trajectories. It can serve as a starting point for experiments involving orbital configurations and numerical behaviour.
+
+---
 
 # Features
 
-Simulates 50 particles orbiting a 1 Msun central star with random orbital elements (semi-major axis, eccentricity, inclination, etc.).
+The repository has been developed around the following capabilities. Verify each against the current source before treating it as a guaranteed feature of a particular release.
 
-Uses velocity Verlet integration with a small timestep (10⁻⁵ yr) for accuracy.
+- Gravitational orbital simulation using REBOUND.
+- Visualisation of particle trajectories using Matplotlib.
+- Configurable simulation initial conditions.
+- Animation-based inspection of the simulated motion.
+- Optional three-dimensional visualisation, where supported by the script.
+- Video export, where supported by the installed rendering tools and current script configuration.
 
-Checks for unbound particles (energy ≥ 0), escapes (r > 100 AU), or near-collisions (r < 0.01 AU).
+Preview
 
-Visualizes orbits in 2D (default) or 3D with particle trails (up to 20 frames long).
+Add a screenshot or GIF from an actual run here.
 
-Outputs particle data (ID, density, mass, semi-major axis, radius) to the console and an MP4 animation.
+<!-- Replace the placeholder below with a committed image or GIF. --><!-- Example: ![Orbital simulation](docs/images/orbital-simulation.gif) -->Suggested preview: a short animation showing the initial configuration and resulting orbital trajectories.
 
-Configurable parameters via a CONFIG dictionary for easy customization.
+Technology Stack
 
+Technology| Purpose
+Python| Main programming language
+REBOUND| N-body simulation framework
+NumPy| Numerical arrays and calculations, where used
+Matplotlib| Plotting and visualisation
+FFmpeg| Video encoding, if the animation is exported to MP4
 
-# Requirements
+Installation
 
-Python: 3.8–3.11
+1. Clone the repository
 
+git clone https://github.com/LuceilIsRight/N-Body-Orbital-Dynamics.git
+cd N-Body-Orbital-Dynamics
 
-# Dependencies:
+2. Create a virtual environment
 
-rebound (3.24.0 recommended): N-body simulation library.
+Windows (PowerShell):
 
-numpy: Numerical computations.
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
-matplotlib: Plotting and animation.
+Linux/macOS:
 
-ffmpeg-python: Interface for FFmpeg (optional, for MP4 output).
+python3 -m venv .venv
+source .venv/bin/activate
 
-FFmpeg: Required for saving the animation as an MP4 video. Install via:
+3. Install dependencies
 
-Windows: Download from ffmpeg.org and add to PATH.
+Install the dependencies required by the current source code. For a project using REBOUND and Matplotlib, the basic packages may be installed with:
 
-macOS: brew install ffmpeg
+python -m pip install --upgrade pip
+python -m pip install rebound numpy matplotlib
 
-Linux: sudo apt-get install ffmpeg
+If the current script imports additional packages, install those as well. A committed "requirements.txt" is preferable once the environment has been tested.
 
-Hardware: 8-core CPU, 16GB RAM recommended for smooth performance.
+Running the Project
 
+Run the repository's main simulation script from the project directory.
 
-# Installation
-
-Clone or download this repository:
-
-git clone https://github.com/LuceilIsRight/Star-System
-cd orbital-simulation
-
-
-# Create a virtual environment and activate it:
-
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-
-
-# Install Python dependencies:
-
-pip install rebound==3.24.0 numpy matplotlib ffmpeg-python
-
-# Verify FFmpeg installation:
-
-ffmpeg -version
-
-If not found, install FFmpeg and ensure it’s in your PATH.
-
-# Usage
-
-Save the code as orbital_simulation.py.
-
-# Run the simulation:
+For example, if the entry-point file is named "orbital_simulation.py":
 
 python orbital_simulation.py
 
+Check the actual filename before running this command. If the script uses a different name, replace it with the correct entry point.
 
-# The script will:
+Follow the prompts or configuration options implemented by the program. Output filenames and supported options depend on the current version.
 
-Initialize the simulation with 50 particles.
+Configuration
 
-Print a table of particle properties (ID, density, mass, semi-major axis, radius).
+Document the configuration variables actually exposed by the source code here.
 
-Generate an MP4 animation named orbit_simulation_YYYYMMDD_HHMMSS.mp4.
+Typical parameters for an orbital simulation may include:
 
-View the output video using any media player.
+Parameter| Description
+Initial positions| Starting locations of the simulated bodies
+Initial velocities| Starting velocities
+Masses| Mass assigned to each body
+Integration settings| Numerical method and timestep, if configurable
+Duration| Length of the simulated evolution
+Visualisation settings| View, animation frame rate, and output resolution
 
+These are general categories, not a guarantee that the current script exposes every parameter.
 
-# Configuration
+Scientific Considerations
 
-Edit the CONFIG dictionary in orbital_simulation.py to customize the simulation:
+Numerical simulations are sensitive to initial conditions, integration settings, and the assumptions used to construct the system.
 
-central_mass: Mass of the central star (default: 1.0 Msun).
+When using the project for quantitative analysis:
 
-N_particles: Number of particles (default: 50).
+- Check that the integration method is appropriate for the system.
+- Investigate sensitivity to the timestep.
+- Examine relevant conserved quantities when the model permits it.
+- Distinguish visual plausibility from numerical accuracy.
+- Record the configuration used to generate a result.
 
-a_range: Semi-major axis range in AU (default: 0.5–5.0).
+Limitations
 
-e_range: Eccentricity range (default: 0.0–0.05).
+The project's accuracy and physical scope depend on the implemented equations, numerical integrator, initial conditions, and validation performed.
 
-inc_range: Inclination range in radians (default: 0.0–0.1).
+Do not interpret a visually plausible orbit as proof that a system is physically stable or quantitatively accurate without suitable tests.
 
-time_span: Simulation duration in years (default: 1000.0).
+# Roadmap
 
-N_outputs: Number of animation frames (default: 300).
+Potential future improvements — not claims about completed functionality:
 
-mass_range: Particle mass range in Msun (default: 10⁻⁷–10⁻⁴; uncomment for 10⁻¹⁰–10⁻⁷ for realistic ~1–10 g/cm³).
+- [ ] Document a reproducible example configuration.
+- [ ] Add automated tests for core calculations.
+- [ ] Add numerical convergence checks.
+- [ ] Document relevant conservation diagnostics.
+- [ ] Separate simulation logic from visualisation logic.
+- [ ] Add example outputs and a concise scientific report.
+- [ ] Add a tested dependency file and continuous integration.
 
-particle_radius_range: Particle radius range in AU (default: 10⁻⁶–5×10⁻⁶ AU, ~150–750 km).
+Contributing
 
-plot_3d: Enable 3D plotting (default: False).
+Issues and suggestions are welcome. Before contributing, please describe the proposed change and how it can be tested.
 
-trail_length: Length of particle trails in frames (default: 20).
+Licence
 
-fps: Frames per second for the animation (default: 15).
-
-dpi: Resolution of the output video (default: 300).
-
-dt: Integration timestep in years (default: 10⁻⁵).
-
-# Example modification for a shorter simulation with fewer particles:
-
-CONFIG = {
-    'central_mass': 1.0,
-    'N_particles': 20,
-    'time_span': 500.0,
-    'N_outputs': 150,
-    # ... other parameters
-}
-
-# Output
-
-Console Output: A table of particle properties, e.g.:
-
-Particle ID | Density (g/cm^3) | Mass (Msun) | Semi-major Axis (AU) | Radius (AU)
----------------------------------------------------------------------------
-          1 |         1.23e+04 |   1.00e-07 |                 2.35 |   1.00e-06
-...
-
-
-
-Animation: An MP4 file (orbit_simulation_YYYYMMDD_HHMMSS.mp4) showing:
-
-Cyan particles orbiting a yellow central star.
-
-Particle trails (cyan, semi-transparent) showing recent paths.
-
-Time and particle count in the title.
-
-2D view (default) or 3D view if plot_3d is True.
-
-Warnings: Console warnings for unbound particles, escapes (r > 100 AU), or near-collisions (r < 0.01 AU).
-
-
-# Performance
-
-Runtime: ~5–10 minutes on an 8-core CPU with 16GB RAM for default settings.
-
-Memory: ~1–2 GB RAM.
-
-Bottlenecks: Animation rendering and FFmpeg encoding. Reduce N_outputs, dpi, or N_particles for faster execution.
-
-# Troubleshooting
-
-FFmpeg Not Found:
-
-Ensure FFmpeg is installed and in your PATH.
-
-Alternatively, use a different Matplotlib writer (e.g., pillow for GIF):
-
-ani.save('orbit_simulation.gif', writer='pillow', dpi=CONFIG['dpi'])
-
-
-
-# REBOUND Errors:
-
-Verify REBOUND version:
-
-python -c "import rebound; print(rebound.__version__)"
-
-Reinstall: pip install rebound==3.24.0
-
-High Density Values:
-
-The default mass_range (10⁻⁷–10⁻⁴ Msun) yields high densities (~10⁴ g/cm³). For realistic asteroid-like densities (~1–10 g/cm³), uncomment:
-
-'mass_range': (1e-10, 1e-7),
-
-# Slow Performance:
-
-Reduce N_particles, N_outputs, or dpi in CONFIG.
-
-Example:
-
-CONFIG['N_particles'] = 20
-CONFIG['N_outputs'] = 100
-CONFIG['dpi'] = 150
-
-# Notes
-
-The simulation uses a small timestep (10⁻⁵ yr) for accuracy, which may slow down large simulations. Adjust dt cautiously to balance speed and stability.
-
-The WHFast integrator is optimized for near-Keplerian orbits, suitable for the low-eccentricity (e_range: 0.0–0.05) particles in this setup.
-
-For 3D visualization, enable plot_3d in CONFIG, but note increased rendering time.
-
-Random seed (np.random.seed(42)) ensures reproducible results.
-
-The derivations of equations will be posted on ArXiv.com.
-
-# License
-
-This project is unlicensed. Feel free to use, modify, and distribute the code as needed.
-
-# Contact
-
-For issues or questions, please open an issue on the repository or contact the maintainer.
-
-# Authors
-
-@LuceilIsRight(https://github.com/LuceilIsRight)
-
-@K-Suvan(https://github.com/K-Suvan)
+Check the repository for an existing licence before reusing or redistributing this code. If no licence is present, reuse permissions should not be assumed.
